@@ -82,22 +82,31 @@ token_estimate: 200
 
 Then run `python scripts/build_index.py` to regenerate the index.
 
-## Usage as a System Prompt
-
-To seed a coding agent session with the full framework:
+## Quick Start
 
 ```bash
-python scripts/assemble_prompt.py
+# Install dependencies
+pip install pyyaml
+
+# List all available skills
+make list
+
+# Rebuild the index (auto-generated from skills/details/)
+make build
+
+# Assemble a compressed system prompt
+make assemble
+
+# Match skills by user query
+make match Q="how does this system work"
+
+# Auto-mode: match + load top skill details
+make auto Q="http post request"
 ```
 
-This injects the skill index into `BASE_SYSTEM_PROMPT.txt` (if present), compresses it, and writes `ASSEMBLED_SYSTEM_PROMPT.txt`. The agent receives this as its system instructions.
+## CI
 
-To activate skills at runtime:
-
-```bash
-python scripts/skill_loader.py --auto "user query here"
-# Returns JSON: { matched: [...], loaded: [{ skill, body, ... }] }
-```
+A GitHub Actions workflow (`.github/workflows/build-index.yml`) automatically rebuilds the index whenever a skill detail file changes in `skills/details/`. The updated `SKILL_INDEX.generated.md` is committed back to the repo on push.
 
 ## License
 
