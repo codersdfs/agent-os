@@ -1,3 +1,3 @@
-- [INTERNAL] BATCH_GRILL_ME | A relentless interview that asks every frontier question at once, round by round | Depends: None
+- [INTERNAL] SKILL | How to use the meta-skill framework for agent skill management | Depends: META_SKILL_FRAMEWORK
 - [INTERNAL] META_SKILL_FRAMEWORK | 7-defense architecture: translation protection, public-lib lockdown, worker amnesia prevention, prompt size defense, version sync, dependency deadlock, dynamic overrides | Depends: None
 - [PUBLIC_LIB] REQUESTS_POST | Executes HTTP POST with JSON auto-serialization | Depends: None
