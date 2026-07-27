@@ -2,9 +2,17 @@
   "name": "meta-skill-framework",
   "version": "1.0.0",
   "description": "Self-referential meta-skill framework: a 7-defense architecture that teaches AI coding agents how to manage and use skills. Includes build tooling (indexer, compressor, assembler) and runtime skill activation via trigger keywords.",
-  "keywords": ["meta-skill", "framework", "skill-management", "ai-agent", "coding-agent"],
+  "keywords": [
+    "meta-skill",
+    "framework",
+    "skill-management",
+    "ai-agent",
+    "coding-agent",
+    "prompt-engineering",
+    "knowledge-graph"
+  ],
   "license": "MIT",
-  "author": "",
+  "author": "codersdfs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codersdfs/skill.git"
@@ -12,5 +20,28 @@
   "bugs": {
     "url": "https://github.com/codersdfs/skill/issues"
   },
-  "homepage": "https://github.com/codersdfs/skill#readme"
+  "homepage": "https://github.com/codersdfs/skill#readme",
+  "bin": {
+    "meta-skill-framework": "bin/meta-skill-framework.js"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.7"
+  },
+  "files": [
+    "bin/",
+    "scripts/*.py",
+    "skills/",
+    "Makefile",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "python scripts/build_index.py",
+    "assemble": "python scripts/assemble_prompt.py",
+    "list": "node bin/meta-skill-framework.js list",
+    "match": "node bin/meta-skill-framework.js match",
+    "auto": "node bin/meta-skill-framework.js auto",
+    "load": "node bin/meta-skill-framework.js load",
+    "prepublishOnly": "node bin/meta-skill-framework.js build"
+  }
 }
