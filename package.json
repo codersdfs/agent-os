@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/codersdfs/skill#readme",
   "bin": {
-    "meta-skill-framework": "bin/meta-skill-framework.js"
+    "meta-skill-framework": "bin/meta-skill-framework.js",
+    "planning": "bin/planning.js"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -30,6 +31,7 @@
   },
   "files": [
     "bin/",
+    "src/",
     "scripts/*.py",
     "skills/",
     "Makefile",
