@@ -2,3 +2,6 @@
 .obsidian/workspace.json
 .trash/
 node_modules/
+package-lock.json
+skills/generated/
+ASSEMBLED_SYSTEM_PROMPT.txt
