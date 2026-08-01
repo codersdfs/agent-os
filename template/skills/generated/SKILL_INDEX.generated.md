@@ -1,0 +1,11 @@
+- [INTERNAL] BATCH_GRILL_ME | A relentless interview that asks every frontier question at once, round by round | Depends: None
+- [INTERNAL] DEFUDDLE | Extract clean markdown from web pages with the Defuddle CLI | Depends: None
+- [INTERNAL] HANDOFF | Compact the conversation into a handoff document for a fresh agent | Depends: None
+- [INTERNAL] IMPROVE_CODEBASE_ARCHITECTURE | Scan a codebase for deepening opportunities, report them, then grill through the pick | Depends: None
+- [INTERNAL] META_SKILL_FRAMEWORK | 7-defense architecture: translation protection, public-lib lockdown, worker amnesia prevention, prompt size defense, version sync, dependency deadlock, dynamic overrides | Depends: None
+- [INTERNAL] OBSIDIAN_VAULT | Search, create, and manage notes in an Obsidian vault with wikilinks | Depends: None
+- [PUBLIC_LIB] REQUESTS_POST | Executes HTTP POST with JSON auto-serialization | Depends: None
+- [INTERNAL] RESOLVING_MERGE_CONFLICTS | Resolve an in-progress git merge or rebase conflict, preserving intent | Depends: None
+- [INTERNAL] SETUP_MATT_POCOCK_SKILLS | Configure a repo for the engineering skills: tracker, labels, domain docs | Depends: None
+- [INTERNAL] TEACH | Teach the user a skill or concept across sessions, in a stateful workspace | Depends: None
+- [INTERNAL] WAYFINDER | Chart a large, foggy effort as a map of decision tickets, then work them one at a time | Depends: None

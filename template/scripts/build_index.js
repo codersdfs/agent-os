@@ -12,10 +12,14 @@ const OUTPUT_FILE = path.join(OUTPUT_DIR, 'SKILL_INDEX.generated.md');
 
 function parseFrontmatter(filepath) {
   const content = fs.readFileSync(filepath, 'utf8');
-  if (!content.startsWith('---')) return null;
+  if (!content.startsWith('---')) return { warn: 'no frontmatter' };
   const parts = content.split('---');
-  if (parts.length < 3) return null;
-  try { return yaml.load(parts[1]); } catch { return null; }
+  if (parts.length < 3) return { warn: 'malformed frontmatter (missing closing ---)' };
+  try {
+    return yaml.load(parts[1]);
+  } catch (e) {
+    return { error: `YAML parse error: ${e.message}` };
+  }
 }
 
 function walk(dir, out = []) {
@@ -35,8 +39,26 @@ function run() {
   const bullets = [];
   for (const filepath of mdFiles) {
     const fm = parseFrontmatter(filepath);
+
+    // Warn on .md files that aren't skills (no frontmatter) — likely notes/readme.
+    if (fm && fm.warn) {
+      console.warn(`WARN: ${path.relative(ROOT, filepath)} — ${fm.warn}, skipping`);
+      continue;
+    }
+    // Hard error on malformed YAML — the author intended a skill but it's broken.
+    if (fm && fm.error) {
+      console.error(`ERROR: ${path.relative(ROOT, filepath)} — ${fm.error}`);
+      process.exit(1);
+    }
     if (!fm) continue;
-    const skillName = fm.skill_name || 'UNKNOWN';
+
+    // Hard error: a skill file must declare skill_name.
+    if (!fm.skill_name) {
+      console.error(`ERROR: ${path.relative(ROOT, filepath)} — missing skill_name in frontmatter`);
+      process.exit(1);
+    }
+
+    const skillName = fm.skill_name;
     const libraryType = fm.library_type || 'unknown';
     const summary = fm.summary || '';
     const dependsOn = fm.depends_on || [];
