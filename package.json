@@ -1,0 +1,11 @@
+{
+  "name": "create-agent-os",
+  "version": "2.0.0",
+  "description": "Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. No python.",
+  "bin": { "create-agent-os": "index.js" },
+  "files": ["index.js", "template"],
+  "type": "commonjs",
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "keywords": ["agent", "skills", "llm", "workflow", "obsidian", "wiki", "second-brain", "claude", "pi", "codex"]
+}

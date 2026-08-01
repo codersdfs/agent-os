@@ -46,7 +46,7 @@ The coding agent (you) handles all three roles directly. No subagent infrastruct
 ### When a skill triggers
 
 ```
-User input → skill_loader.py --auto "query" → matched skill name(s)
+User input → npm run skill-auto -- "query" → matched skill name(s)
   → read_file(skills/details/SKILL_NAME.md) → raw detail text
   → inject into context → respond using detail
 ```
@@ -56,6 +56,8 @@ User input → skill_loader.py --auto "query" → matched skill name(s)
 ```
 /
 ├── AGENTS.md                       # Wires any agent session into the framework
+├── raw/                            # LLM Wiki sources (immutable)
+├── wiki/                           # LLM Wiki pages (index.md, log.md)
 ├── skills/
 │   ├── details/                    # One .md file per skill, each with YAML frontmatter
 │   │   ├── meta_skill_framework.md # The core skill — teaches the framework
@@ -65,12 +67,12 @@ User input → skill_loader.py --auto "query" → matched skill name(s)
 │   └── generated/
 │       └── SKILL_INDEX.generated.md  # Auto-built from details/ — never hand-edit
 ├── scripts/
-│   ├── build_index.py             # Scan details/ → generate index
-│   ├── compress_prompt.py         # Budget check (fail-loud, no mutation)
-│   ├── assemble_prompt.py         # Assemble system prompt (build-time)
-│   └── skill_loader.py            # Match triggers → load skill details (run-time)
+│   ├── build_index.js             # Scan details/ → generate index
+│   ├── compress_check.js          # Budget check (fail-loud, no mutation)
+│   ├── assemble_prompt.js         # Assemble system prompt (build-time)
+│   └── skill_loader.js            # Match triggers → load skill details (run-time)
+├── package.json                   # npm scripts: skill-*
 └── README.md
-```
 ```
 
 ## How to Write a New Skill (The Data Contract)

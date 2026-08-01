@@ -1,105 +1,75 @@
-# agent-os
+# create-agent-os
 
-One repo. A **skill-powered agent OS** for AI coding agents.
+Scaffold an **agent OS workspace** — one repo that bundles two things:
 
-agent-os is a self-referential skill framework: a curated library of skills
-(`skills/details/`), a build pipeline that keeps your system prompt within a
-budget, and a runtime trigger-loader that activates the right skill on
-demand. Any agent that reads `AGENTS.md` at session start — Claude Code,
-Codex, pi, Cursor — becomes a skill-powered agent, no per-agent setup.
+1. **AI workflows** — a skill system (the Meta-Skill Framework): trigger-matched skills, auto-built index, budget-checked system prompt, runtime skill loading.
+2. **A template** — an LLM Wiki (Karpathy's pattern): `raw/` sources → agent-maintained `wiki/` pages, so your agent stops having amnesia.
 
-> "The system prompt is the source of truth; the skill detail files are the
-> payload; the loader is the trigger." — the framework, in one line.
+Pure **Node** — no python, no pip. `npm install` is the whole setup.
+
+> "Obsidian is the IDE; the LLM is the programmer; the wiki is the codebase." — Andrej Karpathy
+
+## Install
+
+```sh
+npm create agent-os@latest my-brain
+```
+
+Not published yet? Run straight from the repo:
+
+```sh
+npx -y github:<you>/create-agent-os my-brain
+```
+
+## What you get
+
+```
+my-brain/
+├── AGENTS.md          ← wires any agent session: skill roles + wiki maintainer
+├── raw/               ← your sources (immutable; attachments → raw/assets/)
+├── wiki/
+│   ├── index.md       ← page catalog (LLM Wiki)
+│   └── log.md         ← append-only history
+├── skills/
+│   ├── details/       ← one .md per skill (YAML frontmatter, triggers)
+│   │   ├── batch_grill_me.md       # signature interview skill
+│   │   ├── meta_skill_framework.md # the framework itself
+│   │   └── requests_post.md        # example public-lib skill
+│   └── generated/     ← SKILL_INDEX.generated.md (auto-built, never hand-edit)
+├── scripts/           ← pure-Node pipeline (js-yaml is the only dependency)
+└── package.json       ← npm scripts: skill-*
+```
 
 ## Quick start
 
 ```sh
-git clone https://github.com/<you>/agent-os.git
-cd agent-os
-pip install -e .        # deps + CLI entry points (works on Windows, no make needed)
-
-skill-list              # see what's loaded
-skill-auto "grill me"   # match + load the top skills for a query
+npm create agent-os@latest my-brain
+cd my-brain
+npm run skill-auto -- "grill me"     # skills work
+npm run skill-build                  # rebuild index after editing skills/details/
+npm run skill-assemble               # budget-checked system prompt → ASSEMBLED_SYSTEM_PROMPT.txt
 ```
 
-Then open any agent session in the repo. It reads `AGENTS.md`, knows the
-index, and loads skill detail files raw when triggers fire.
+For the wiki: drop a source into `raw/`, then tell any agent session in the
+workspace: `ingest raw/<file>`.
 
-## What's inside
+## The skills pipeline
 
-```
-agent-os/
-├── AGENTS.md                       # wires any agent session into the framework
-├── skills/
-│   ├── details/                    # one .md per skill (YAML frontmatter + raw body)
-│   │   ├── meta_skill_framework.md # the core skill — teaches the framework
-│   │   ├── batch_grill_me.md       # signature interview skill (frontier questions)
-│   │   └── requests_post.md        # example public-lib skill (requests 2.31.0)
-│   └── generated/
-│       └── SKILL_INDEX.generated.md  # auto-built — never hand-edit (D-5)
-├── scripts/
-│   ├── build_index.py              # details → index (enforces locked_version)
-│   ├── compress_prompt.py          # budget check — fails loud, never truncates
-│   ├── assemble_prompt.py          # build-time: index → assembled system prompt
-│   └── skill_loader.py             # run-time: trigger match → raw detail load
-└── pyproject.toml                  # pip install -e . → skill-* entry points
-```
-
-## The 7 defenses
-
-| ID | Name | Rule |
-|:---|:---|:---|
-| **D-1** | Translation Protection | Self-check for orphan skill names, empty placeholders, >400 tokens |
-| **D-2** | Public-Lib Lockdown | `[PUBLIC_LIB]` skills void pre-training — force-read the detail file |
-| **D-3** | Worker Amnesia Prevention | Read skill detail files raw — no interpretation |
-| **D-4** | Prompt Size Defense | System prompt ≤400 tokens — enforced as a fail-loud check |
-| **D-5** | Version Sync | Index auto-built from `skills/details/` |
-| **D-6** | Dependency Deadlock | 4-item self-review checklist before code output |
-| **D-7** | Dynamic Overrides | `SESSION_OVERRIDES` JSON block for user exceptions |
-
-Full rules, the single-agent protocol, and the data contract for new skills
-live in [`skills/details/meta_skill_framework.md`](skills/details/meta_skill_framework.md)
-and [`AGENTS.md`](AGENTS.md).
-
-## How it works
-
-**Build time** — `skill-build` parses `skills/details/*.md` frontmatter
-(enforcing `locked_version` on public libs), emits the index; `skill-assemble`
-injects the index into a template and budget-checks the result (≤400 tokens,
-fail-loud — the compressor never mutates content).
-
-**Session start** — the agent reads `AGENTS.md`, holds the index (Index
-Keeper), and knows the trigger flow.
-
-**Runtime** — user input → `skill-auto "<query>"` → trigger scores → matched
-skill names → the agent reads the detail file raw → injects into context →
-responds (Self-Reviewer runs D-6 before code output).
-
-## CLI
-
-```
-skill-build                          # regenerate the index
-skill-assemble                       # budget-checked system prompt → ASSEMBLED_SYSTEM_PROMPT.txt
-skill-list                           # list skills
-skill-match "<query>"                # score triggers only
-skill-load <SKILL_NAME>              # load one skill (dependency-ordered)
-skill-auto "<query>"                 # match + load top skills (the runtime entry point)
-```
-
-All also run as `python scripts/<script>.py ...`; a `Makefile` wraps them for
-Unix environments (`make list`, `make auto Q="..."`).
+| Command | What it does |
+|---|---|
+| `npm run skill-list` | list available skills |
+| `npm run skill-auto -- "<query>"` | trigger-match + load top skills (runtime) |
+| `npm run skill-match -- "<query>"` | score-only matching |
+| `npm run skill-load -- NAME` | load a skill by name |
+| `npm run skill-build` | regenerate the index from `skills/details/` (D-5) |
+| `npm run skill-assemble` | assemble + budget-check the system prompt (D-4, fail-loud) |
+| `npm run selfcheck` | verify the pipeline's non-trivial logic |
 
 ## Adding a skill
 
-1. Create `skills/details/<name>.md` with the frontmatter contract from the
-   meta-skill-framework skill.
-2. `skill-build` to regenerate the index.
-3. Commit both — CI keeps the index fresh on push.
-
-## CI
-
-`.github/workflows/build-index.yml` rebuilds the index whenever a detail file
-changes and commits it back on push events (not on fork PRs).
+Create `skills/details/<name>.md` with the frontmatter contract in
+`skills/details/meta_skill_framework.md`, then `npm run skill-build`.
+The index is generated — never hand-edited.
 
 ## License
 
