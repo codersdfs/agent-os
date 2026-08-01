@@ -65,6 +65,26 @@ workspace: `ingest raw/<file>`.
 | `npm run skill-assemble` | assemble + budget-check the system prompt (D-4, fail-loud) |
 | `npm run selfcheck` | verify the pipeline's non-trivial logic |
 
+## Shipped skills (v2.1)
+
+A curated starter set, distilled to the contract (full provenance in
+[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES)):
+
+- **BATCH_GRILL_ME** — frontier-interview skill (signature)
+- **META_SKILL_FRAMEWORK** — the 7-defenses architecture itself
+- **WAYFINDER** — chart a large foggy effort as decision tickets, then work them
+- **HANDOFF** — compact the conversation into a handoff doc for a fresh agent
+- **TEACH** — stateful, multi-session teaching workspace
+- **SETUP_MATT_POCOCK_SKILLS** — configure tracker / triage labels / domain docs
+- **RESOLVING_MERGE_CONFLICTS** — resolve in-progress merges, preserving intent
+- **IMPROVE_CODEBASE_ARCHITECTURE** — deepening opportunities + grilling
+- **DEFUDDLE** — clean markdown from web pages (MIT tool, kepano)
+- **OBSIDIAN_VAULT** — search/create/manage vault notes with wikilinks
+- **REQUESTS_POST** — example public-lib skill
+
+The UI/design and video/creative clusters are deliberately not shipped; the
+user's personal workspace carries the full stack instead.
+
 ## Adding a skill
 
 Create `skills/details/<name>.md` with the frontmatter contract in

@@ -1,6 +1,6 @@
 {
   "name": "create-agent-os",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. No python.",
   "bin": { "create-agent-os": "index.js" },
   "files": ["index.js", "template"],
