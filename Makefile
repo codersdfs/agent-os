@@ -1,12 +1,15 @@
-.PHONY: build assemble list load clean install
+.PHONY: build assemble list load match auto install clean
+
+# Note: on Windows (no make), the pip entry points are the primary CLI:
+#   pip install -e .   →   skill-list / skill-auto "query" / skill-build / skill-assemble
 
 # Build: regenerate SKILL_INDEX.generated.md from skills/details/
 build:
 	python scripts/build_index.py
 
-# Assemble: build + compress into ASSEMBLED_SYSTEM_PROMPT.txt
+# Assemble: build + budget-check into ASSEMBLED_SYSTEM_PROMPT.txt
+# (assemble_prompt.py runs build_index itself; do not run it twice)
 assemble:
-	python scripts/build_index.py
 	python scripts/assemble_prompt.py
 
 # List all available skills
@@ -25,9 +28,9 @@ match:
 auto:
 	python scripts/skill_loader.py --auto "$(Q)"
 
-# Install Python dependencies
+# Install as a package (dependencies + entry points)
 install:
-	pip install pyyaml
+	pip install -e .
 
 # Clean generated files
 clean:

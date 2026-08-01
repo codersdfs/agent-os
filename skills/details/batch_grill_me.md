@@ -4,8 +4,6 @@ library_type: "internal"
 summary: "A relentless interview that asks every frontier question at once, round by round"
 depends_on: []
 trigger_keywords: ["grill", "interview", "stress-test", "design tree", "frontier questions"]
-force_read_detail: false
-token_estimate: 200
 ---
 
 Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.

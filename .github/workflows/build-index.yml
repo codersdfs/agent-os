@@ -3,10 +3,10 @@ name: Build Index
 on:
   push:
     paths:
-      - 'skills/details/*.md'
+      - 'skills/details/**/*.md'
   pull_request:
     paths:
-      - 'skills/details/*.md'
+      - 'skills/details/**/*.md'
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,8 @@ jobs:
           fi
 
       - name: Commit updated index
-        if: steps.diff.outputs.changed == 'true'
+        # Commit-back only on push events: on fork PRs the token can't push.
+        if: steps.diff.outputs.changed == 'true' && github.event_name == 'push'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"

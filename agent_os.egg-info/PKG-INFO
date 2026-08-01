@@ -1,3 +1,13 @@
+Metadata-Version: 2.4
+Name: agent-os
+Version: 1.0.0
+Summary: One repo, a skill-powered agent OS: self-referential skills, a build pipeline that keeps system prompts within budget, and runtime trigger-loading for any AI coding agent.
+License: MIT
+Keywords: agent,skills,ai-agent,skill-management,system-prompt
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: pyyaml>=6.0
+
 # agent-os
 
 One repo. A **skill-powered agent OS** for AI coding agents.

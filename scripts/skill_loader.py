@@ -200,7 +200,23 @@ def format_skill_output(skill_name, info, include_frontmatter=False):
     return info["body"]
 
 
+# Entry-point UX: `skill-match "q"` / `skill-auto "q"` / `skill-load NAME` /
+# `skill-list` (from [project.scripts]) inject their subcommand flag so the
+# user doesn't need to type it twice. Module-level so selfcheck can verify it.
+FLAG_BY_CLI = {
+    "skill-match": "--match",
+    "skill-auto": "--auto",
+    "skill-load": "--load",
+    "skill-list": "--list",
+}
+
+
 def main():
+    _INVOKED = os.path.basename(sys.argv[0]).lower().removesuffix(".exe")
+    flag = FLAG_BY_CLI.get(_INVOKED)
+    if flag and flag not in sys.argv:
+        sys.argv = [sys.argv[0], flag] + sys.argv[1:]
+
     parser = argparse.ArgumentParser(description="Skill Loader — activate skills by trigger keywords")
     parser.add_argument("--list", action="store_true", help="List all available skills")
     parser.add_argument("--match", type=str, help="Match user input against trigger keywords")
@@ -265,8 +281,9 @@ def main():
                     if deps:
                         dep_texts = {}
                         for d in deps:
-                            if d in skills:
-                                dep_texts[d] = skills[d]["body"]
+                            dk = d.upper().strip()
+                            if dk in skills:
+                                dep_texts[dk] = skills[dk]["body"]
                         output[f"{sn}___dependency_details"] = dep_texts
                 print(json.dumps(output, indent=2))
             else:

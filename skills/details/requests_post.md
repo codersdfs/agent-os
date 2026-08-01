@@ -6,8 +6,6 @@ locked_version: "2.31.0"
 summary: "Executes HTTP POST with JSON auto-serialization"
 depends_on: []
 trigger_keywords: ["post", "http"]
-force_read_detail: true
-token_estimate: 150
 ---
 # DETAIL TEMPLATE (AI MUST COPY THIS EXACTLY)
 def post_request(url, json_payload=None, custom_headers=None, timeout=30):

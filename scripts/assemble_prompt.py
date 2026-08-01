@@ -92,7 +92,11 @@ def assemble(template_path: str | None = None) -> str:
     index_text = read_index()
     with_index = inject_index(base, index_text)
     from compress_prompt import compress
-    return compress(with_index)
+    try:
+        return compress(with_index)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def main():

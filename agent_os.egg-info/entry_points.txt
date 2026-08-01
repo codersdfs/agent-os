@@ -1,0 +1,7 @@
+[console_scripts]
+skill-assemble = scripts.assemble_prompt:main
+skill-auto = scripts.skill_loader:main
+skill-build = scripts.build_index:main
+skill-list = scripts.skill_loader:main
+skill-load = scripts.skill_loader:main
+skill-match = scripts.skill_loader:main
