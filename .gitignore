@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 ASSEMBLED_SYSTEM_PROMPT.txt
 .DS_Store
+
+# build junk
+*.egg-info/
