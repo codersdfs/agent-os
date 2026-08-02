@@ -52,7 +52,7 @@ function ask(q) {
   }
 
   fs.mkdirSync(dest, { recursive: true });
-  fs.cpSync(path.join(__dirname, 'template'), dest, { recursive: true });
+  fs.cpSync(path.join(__dirname, 'src', 'template'), dest, { recursive: true });
 
   // raw/ is where sources land — create it explicitly
   fs.mkdirSync(path.join(dest, 'raw'), { recursive: true });

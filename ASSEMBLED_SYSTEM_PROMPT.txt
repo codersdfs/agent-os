@@ -1,3 +1,4 @@
+[SKILL_INDEX]
 - [INTERNAL] BATCH_GRILL_ME | A relentless interview that asks every frontier question at once, round by round | Depends: None
 - [INTERNAL] DEFUDDLE | Extract clean markdown from web pages with the Defuddle CLI | Depends: None
 - [INTERNAL] HANDOFF | Compact the conversation into a handoff document for a fresh agent | Depends: None

@@ -21,7 +21,7 @@ const path = require('path');
 const fs = require('fs');
 
 const PKG_ROOT = path.dirname(__dirname);
-const SCRIPTS = path.join(PKG_ROOT, 'template', 'scripts');
+const SCRIPTS = path.join(PKG_ROOT, 'src', 'template', 'scripts');
 
 function run(script, args = []) {
   const scriptPath = path.join(SCRIPTS, script);
@@ -60,7 +60,7 @@ Commands:
   // the template's shipped skill set (so the package is usable pre-scaffold).
   const dirArgs = ['--details-dir', fs.existsSync(path.join(process.cwd(), 'skills', 'details'))
     ? path.join(process.cwd(), 'skills', 'details')
-    : path.join(PKG_ROOT, 'template', 'skills', 'details')];
+    : path.join(PKG_ROOT, 'src', 'template', 'skills', 'details')];
 
   switch (command) {
     case 'list':

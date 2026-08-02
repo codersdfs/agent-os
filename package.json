@@ -8,7 +8,7 @@
     "vibe": "bin/vibe.js",
     "create-agent-os": "index.js"
   },
-  "files": ["index.js", "bin/", "src/", "template", "skills/generated/SKILL_INDEX.generated.md"],
+  "files": ["index.js", "bin/", "src/"],
   "type": "commonjs",
   "engines": { "node": ">=18" },
   "license": "MIT",
@@ -30,15 +30,17 @@
     "vibe:check": "node bin/vibe.js check",
     "vibe:audit": "node bin/vibe.js audit",
     "vibe:signoff": "node bin/vibe.js signoff",
-    "selfcheck": "node template/scripts/selfcheck.js",
-    "verify": "node template/scripts/verify.js",
-    "security-scan": "node template/scripts/security_scan.js",
-    "wiki-ingest": "node template/scripts/wiki_ingest.js",
-    "wiki-query": "node template/scripts/wiki_query.js",
-    "wiki-lint": "node template/scripts/wiki_lint.js",
-    "wiki-ingest:stdin": "node template/scripts/wiki_ingest.js --stdin",
-    "wiki-query:json": "node template/scripts/wiki_query.js --json",
-    "wiki-lint:fix": "node template/scripts/wiki_lint.js --fix"
+    "selfcheck": "node src/template/scripts/selfcheck.js",
+    "verify": "node src/template/scripts/verify.js",
+    "security-scan": "node src/template/scripts/security_scan.js",
+    "wiki-ingest": "node src/template/scripts/wiki_ingest.js",
+    "wiki-query": "node src/template/scripts/wiki_query.js",
+    "wiki-lint": "node src/template/scripts/wiki_lint.js",
+    "wiki-ingest:stdin": "node src/template/scripts/wiki_ingest.js --stdin",
+    "wiki-query:json": "node src/template/scripts/wiki_query.js --json",
+    "wiki-lint:fix": "node src/template/scripts/wiki_lint.js --fix",
+    "wiki-map": "node src/template/scripts/wiki_map.js",
+    "wiki-map:api": "node src/template/scripts/wiki_map.js 3001"
   },
   "dependencies": { "js-yaml": "^4.3.1" }
 }
