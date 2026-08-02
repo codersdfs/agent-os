@@ -73,8 +73,8 @@ function testBuildIndexValidation() {
   // Monkey-patch the SKILLS_DIR by setting an env var won't work (hardcoded).
   // Instead, verify the fix is in place by checking the source.
   const src = fs.readFileSync(indexScript, 'utf8');
-  assert.ok(src.includes("missing skill_name in frontmatter"),
-    'build_index.js must error on missing skill_name');
+  assert.ok(src.includes("no skill_name or name in frontmatter"),
+    'build_index.js must warn on missing skill_name');
   assert.ok(!src.includes("|| 'UNKNOWN'"),
     'build_index.js must not fall back to UNKNOWN for skill_name');
 
