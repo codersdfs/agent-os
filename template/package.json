@@ -11,10 +11,14 @@
     "skill-list": "node scripts/skill_loader.js --list",
     "skill-build": "node scripts/build_index.js",
     "skill-assemble": "node scripts/assemble_prompt.js",
-    "selfcheck": "node scripts/selfcheck.js"
+    "selfcheck": "node scripts/selfcheck.js",
+    "security-scan": "node scripts/security_scan.js",
+    "verify": "node scripts/verify.js"
   },
   "dependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.3.1"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }

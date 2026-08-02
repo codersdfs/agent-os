@@ -5,7 +5,16 @@
   "bin": { "create-agent-os": "index.js" },
   "files": ["index.js", "template"],
   "type": "commonjs",
+  "private": true,
   "engines": { "node": ">=18" },
   "license": "MIT",
-  "keywords": ["agent", "skills", "llm", "workflow", "obsidian", "wiki", "second-brain", "claude", "pi", "codex"]
+  "keywords": ["agent", "skills", "llm", "workflow", "obsidian", "wiki", "second-brain", "claude", "pi", "codex"],
+  "scripts": {
+    "selfcheck": "node template/scripts/selfcheck.js",
+    "verify": "node template/scripts/verify.js",
+    "security-scan": "node template/scripts/security_scan.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.3.1"
+  }
 }
