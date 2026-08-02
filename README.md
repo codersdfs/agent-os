@@ -1,4 +1,8 @@
-# create-agent-os
+# @franklinww/create-agent-os
+
+> ⚠️ **BETA** — actively developed, not fully production-tested. APIs, scripts,
+> and the scaffolded template can change between releases. Use it, report what
+> breaks, but don't build mission-critical processes on it yet.
 
 Scaffold an **agent OS workspace** — one repo that bundles two things:
 
@@ -12,13 +16,7 @@ Pure **Node** — no python, no pip. `npm install` is the whole setup.
 ## Install
 
 ```sh
-npm create agent-os@latest my-brain
-```
-
-Not published yet? Run straight from the repo:
-
-```sh
-npx -y github:<you>/create-agent-os my-brain
+npm create @franklinww/agent-os my-brain
 ```
 
 ## What you get
@@ -43,7 +41,7 @@ my-brain/
 ## Quick start
 
 ```sh
-npm create agent-os@latest my-brain
+npm create @franklinww/agent-os my-brain
 cd my-brain
 npm run skill-auto -- "grill me"     # skills work
 npm run skill-build                  # rebuild index after editing skills/details/
@@ -69,7 +67,8 @@ time as agents ingest, query, and link new knowledge.
 `wiki/log.md`. The log shows what happened last; the wiki holds the knowledge.
 New agents read the wiki before starting work — context survives across sessions.
 
-See [HOW_TO_WIKI.md](HOW_TO_WIKI.md) for the full how-to.
+See `HOW_TO_WIKI.md` in your workspace for the full how-to (it's scaffolded
+in with the rest of the template).
 
 ## The skills pipeline
 
