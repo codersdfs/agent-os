@@ -6,7 +6,7 @@
 
    The estimate is chars/4 — advisory, not a real tokenizer. Conservative for
    prose; code-heavy content estimates low. Treat as a floor for review. */
-const MAX_TOKENS = 395; // 5-token safety margin below the 400 limit
+const MAX_TOKENS = 8000;
 
 function estimateTokens(text) {
   return text.length / 4;

@@ -15,9 +15,9 @@ function testCompress() {
   const { check, MAX_TOKENS } = require('./compress_check');
   const small = '# Hello\n\nThis is a tiny prompt.\n';
   assert.strictEqual(check(small), small, 'compress must not mutate in-budget text');
-  const big = 'word '.repeat(5000) + '\nnoteworthy line that old code would delete\n';
+  const big = 'word '.repeat(32001) + '\nnoteworthy line that old code would delete\n';
   assert.throws(() => check(big), undefined, 'compress must raise when over the token budget');
-  assert.strictEqual(MAX_TOKENS, 395, 'budget constant drifted');
+  assert.strictEqual(MAX_TOKENS, 8000, 'budget constant drifted');
 }
 
 function testDependencyOrderCase() {
