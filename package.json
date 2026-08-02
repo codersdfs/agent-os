@@ -1,23 +1,26 @@
 {
-  "name": "meta-skill-framework",
+  "name": "create-agent-os",
   "version": "2.1.0",
-  "description": "Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. Includes vibe coding framework and meta-skill management.",
+  "description": "Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. Includes vibe coding framework and meta-skill management. Pure Node — no python, no pip.",
   "bin": {
     "meta-skill-framework": "bin/meta-skill-framework.js",
     "planning": "bin/planning.js",
     "vibe": "bin/vibe.js",
     "create-agent-os": "index.js"
   },
-  "files": ["index.js", "bin/", "src/", "template", "scripts/*.py", "skills/"],
+  "files": ["index.js", "bin/", "src/", "template", "skills/generated/SKILL_INDEX.generated.md"],
   "type": "commonjs",
   "engines": { "node": ">=18" },
   "license": "MIT",
   "author": "codersdfs",
-  "repository": { "type": "git", "url": "git+https://github.com/codersdfs/agent-os.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codersdfs/agent-os.git"
+  },
   "keywords": ["agent", "skills", "llm", "workflow", "obsidian", "wiki", "second-brain", "claude", "pi", "codex", "vibe-coding"],
   "scripts": {
-    "build": "python scripts/build_index.py",
-    "assemble": "python scripts/assemble_prompt.py",
+    "build": "node bin/meta-skill-framework.js build",
+    "assemble": "node bin/meta-skill-framework.js assemble",
     "list": "node bin/meta-skill-framework.js list",
     "match": "node bin/meta-skill-framework.js match",
     "auto": "node bin/meta-skill-framework.js auto",
