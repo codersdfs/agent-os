@@ -1,6 +1,4 @@
-__pycache__/
-*.pyc
-ASSEMBLED_SYSTEM_PROMPT.txt
+node_modules/
 .DS_Store
 
 # AI-Coding Framework artifacts

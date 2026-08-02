@@ -1,43 +1,20 @@
 {
   "name": "meta-skill-framework",
-  "version": "1.0.0",
-  "description": "Self-referential meta-skill framework: a 7-defense architecture that teaches AI coding agents how to manage and use skills. Includes build tooling (indexer, compressor, assembler) and runtime skill activation via trigger keywords.",
-  "keywords": [
-    "meta-skill",
-    "framework",
-    "skill-management",
-    "ai-agent",
-    "coding-agent",
-    "prompt-engineering",
-    "knowledge-graph"
-  ],
-  "license": "MIT",
-  "author": "codersdfs",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codersdfs/skill.git"
-  },
-  "bugs": {
-    "url": "https://github.com/codersdfs/skill/issues"
-  },
-  "homepage": "https://github.com/codersdfs/skill#readme",
+  "version": "2.1.0",
+  "description": "Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. Includes vibe coding framework and meta-skill management.",
   "bin": {
     "meta-skill-framework": "bin/meta-skill-framework.js",
     "planning": "bin/planning.js",
-    "vibe": "bin/vibe.js"
+    "vibe": "bin/vibe.js",
+    "create-agent-os": "index.js"
   },
-  "engines": {
-    "node": ">=14.0.0",
-    "python": ">=3.7"
-  },
-  "files": [
-    "bin/",
-    "src/",
-    "scripts/*.py",
-    "skills/",
-    "Makefile",
-    "README.md"
-  ],
+  "files": ["index.js", "bin/", "src/", "template", "scripts/*.py", "skills/"],
+  "type": "commonjs",
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "author": "codersdfs",
+  "repository": { "type": "git", "url": "git+https://github.com/codersdfs/agent-os.git" },
+  "keywords": ["agent", "skills", "llm", "workflow", "obsidian", "wiki", "second-brain", "claude", "pi", "codex", "vibe-coding"],
   "scripts": {
     "build": "python scripts/build_index.py",
     "assemble": "python scripts/assemble_prompt.py",
@@ -45,11 +22,14 @@
     "match": "node bin/meta-skill-framework.js match",
     "auto": "node bin/meta-skill-framework.js auto",
     "load": "node bin/meta-skill-framework.js load",
-    "prepublishOnly": "node bin/meta-skill-framework.js build",
     "vibe": "node bin/vibe.js",
     "vibe:classify": "node bin/vibe.js classify",
     "vibe:check": "node bin/vibe.js check",
     "vibe:audit": "node bin/vibe.js audit",
-    "vibe:signoff": "node bin/vibe.js signoff"
-  }
+    "vibe:signoff": "node bin/vibe.js signoff",
+    "selfcheck": "node template/scripts/selfcheck.js",
+    "verify": "node template/scripts/verify.js",
+    "security-scan": "node template/scripts/security_scan.js"
+  },
+  "dependencies": { "js-yaml": "^4.3.1" }
 }

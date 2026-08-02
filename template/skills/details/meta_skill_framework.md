@@ -4,8 +4,6 @@ library_type: "internal"
 summary: "7-defense architecture: translation protection, public-lib lockdown, worker amnesia prevention, prompt size defense, version sync, dependency deadlock, dynamic overrides"
 depends_on: []
 trigger_keywords: ["meta-skill", "framework", "how does this system work", "explain the architecture", "defense", "system prompt"]
-force_read_detail: false
-token_estimate: 350
 ---
 # Meta-Skill Framework
 
@@ -48,7 +46,7 @@ The coding agent (you) handles all three roles directly. No subagent infrastruct
 ### When a skill triggers
 
 ```
-User input → skill_loader.py --auto "query" → matched skill name(s)
+User input → npm run skill-auto -- "query" → matched skill name(s)
   → read_file(skills/details/SKILL_NAME.md) → raw detail text
   → inject into context → respond using detail
 ```
@@ -57,20 +55,23 @@ User input → skill_loader.py --auto "query" → matched skill name(s)
 
 ```
 /
+├── AGENTS.md                       # Wires any agent session into the framework
+├── raw/                            # LLM Wiki sources (immutable)
+├── wiki/                           # LLM Wiki pages (index.md, log.md)
 ├── skills/
-│   ├── details/                      # One .md file per skill, each with YAML frontmatter
-│   │   ├── meta-skill-framework.md
-│   │   ├── SKILL.md                  # batch-grill-me
-│   │   ├── sample_requests_post.md
+│   ├── details/                    # One .md file per skill, each with YAML frontmatter
+│   │   ├── meta_skill_framework.md # The core skill — teaches the framework
+│   │   ├── batch_grill_me.md       # Signature interview skill
+│   │   ├── requests_post.md        # Example public-lib skill
 │   │   └── ... (add new skills here)
 │   └── generated/
 │       └── SKILL_INDEX.generated.md  # Auto-built from details/ — never hand-edit
 ├── scripts/
-│   ├── build_index.py               # Scan details/ → generate index
-│   ├── compress_prompt.py           # Compress prompts to <=400 tokens
-│   ├── assemble_prompt.py           # Assemble system prompt (build-time)
-│   └── skill_loader.py              # Match triggers → load skill details (run-time)
-├── package.json
+│   ├── build_index.js             # Scan details/ → generate index
+│   ├── compress_check.js          # Budget check (fail-loud, no mutation)
+│   ├── assemble_prompt.js         # Assemble system prompt (build-time)
+│   └── skill_loader.js            # Match triggers → load skill details (run-time)
+├── package.json                   # npm scripts: skill-*
 └── README.md
 ```
 
@@ -87,20 +88,16 @@ locked_version: "x.x.x"           # REQUIRED if public
 summary: "One-line description"   # <=15 words, appears in Index
 depends_on: ["OTHER_SKILL"]       # Array of skill_name
 trigger_keywords: ["keyword"]     # Optional
-force_read_detail: true           # For public libs, always true
-token_estimate: 150               # Estimated tokens of this detail file
 ---
 # (Detail content here. Code templates, parameters, edge cases.)
 ```
 
 ### Rules
-- **Public libs** (`library_type: public`) MUST include `library_name` and `locked_version`. The build script enforces this.
+- **Public libs** (`library_type: public`) MUST include `library_name` and `locked_version`. The build script enforces this. Public libs appear as `[PUBLIC_LIB]` in the index — that tag is the D-2 lockdown trigger: force-read the detail file, pre-training is void.
 - **Internal skills** (`library_type: internal`) omit `library_name` and `locked_version`.
 - `skill_name` must be UPPERCASE with underscores.
 - `summary` <=15 words — it's what appears in the generated Index.
 - `depends_on` is an array. Populated skills get loaded in dependency order.
-- `force_read_detail` should be `true` for public libs to trigger D-2 Lockdown.
-- `token_estimate` helps the compressor plan budget.
 
 ## Self-Review Checklist (D-6)
 
