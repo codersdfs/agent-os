@@ -19,7 +19,9 @@
     "wiki-lint": "node scripts/wiki_lint.js",
     "wiki-ingest:stdin": "node scripts/wiki_ingest.js --stdin",
     "wiki-query:json": "node scripts/wiki_query.js --json",
-    "wiki-lint:fix": "node scripts/wiki_lint.js --fix"
+    "wiki-lint:fix": "node scripts/wiki_lint.js --fix",
+    "wiki-map": "node scripts/wiki_map.js",
+    "wiki-map:api": "node scripts/wiki_map.js 3001"
   },
   "dependencies": {
     "js-yaml": "^4.3.1"

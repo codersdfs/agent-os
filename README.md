@@ -53,6 +53,24 @@ npm run skill-assemble               # budget-checked system prompt → ASSEMBLE
 For the wiki: drop a source into `raw/`, then tell any agent session in the
 workspace: `ingest raw/<file>`.
 
+## The Wiki Map (localhost)
+
+The wiki doubles as a **cartography of agent activity** — a browsable map of
+what agents are learning, linked to what they already know. Start it with:
+
+```bash
+npm run wiki-map      # http://localhost:3000
+```
+
+Browse pages, see backlinks, spot broken references. The map updates in real
+time as agents ingest, query, and link new knowledge.
+
+**Agent handoff**: when switching agents, point the new one at `AGENTS.md` and
+`wiki/log.md`. The log shows what happened last; the wiki holds the knowledge.
+New agents read the wiki before starting work — context survives across sessions.
+
+See [HOW_TO_WIKI.md](HOW_TO_WIKI.md) for the full how-to.
+
 ## The skills pipeline
 
 | Command | What it does |
