@@ -1,6 +1,6 @@
 #!/bin/sh
 # Pre-commit hook for AI-Coding Framework
-# Run this after installing husky: npx husky add .husky/pre-commit "python scripts/vibe_framework.py check $1"
+# Runs the Node vibe classifier at commit time.
 
 echo "Running AI-Coding Framework checks..."
 
@@ -15,12 +15,12 @@ fi
 FAILED=0
 for FILE in $CHANGED_FILES; do
     echo "Checking $FILE..."
-    
+
     # Auto-detect risk level and run checks
-    RISK_LEVEL=$(python scripts/vibe_framework.py classify "$FILE" 2>/dev/null | grep -oE '(HIGH|MEDIUM|LOW)' | tr '[:lower:]' '[:upper:]')
-    
+    RISK_LEVEL=$(node bin/vibe.js classify "$FILE" 2>/dev/null | grep -oE '(HIGH|MEDIUM|LOW)' | tr '[:lower:]' '[:upper:]')
+
     if [ -n "$RISK_LEVEL" ]; then
-        python scripts/vibe_framework.py check "$FILE" --risk-level "$RISK_LEVEL" || FAILED=1
+        node bin/vibe.js check "$FILE" --risk-level "$RISK_LEVEL" || FAILED=1
     fi
 done
 

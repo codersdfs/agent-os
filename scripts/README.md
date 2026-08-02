@@ -1,15 +1,14 @@
 # Responsible AI-Coding Framework
 
-CLI tool for enforcing responsible AI-assisted development practices. Implements the framework defined in `framework-vibe-coding.md`.
+CLI tool for enforcing responsible AI-assisted development practices. See `framework-vibe-coding.md`.
 
 ## Quick Start
 
-```bash
-# Install dependencies
-pip install -r requirements.txt 2>/dev/null || true
+No install needed — `vibe` ships with the package and has zero dependencies.
 
-# Make executable
-chmod +x scripts/vibe.js
+```bash
+# Make sure node >= 18 is available
+node --version
 ```
 
 ## Commands
@@ -135,27 +134,9 @@ npm run vibe:view -- --limit 5
 
 ---
 
-## Configuration
-
-No config file needed. To customize patterns, edit `scripts/vibe.js`:
-
-```python
-HIGH_RISK_PATTERNS = [
-    r'(your-pattern-here)',
-    # ...
-]
-
-MEDIUM_RISK_PATTERNS = [
-    r'(your-pattern-here)',
-    # ...
-]
-```
-
----
-
 ## Requirements
 
-- Python 3.7+
+- Node.js 18+
 - No external dependencies (stdlib only)
 
 ---
@@ -163,5 +144,3 @@ MEDIUM_RISK_PATTERNS = [
 ## Framework Documentation
 
 Full framework specification: [`framework-vibe-coding.md`](../framework-vibe-coding.md)
-
-Wayfinder map: [`.scratch/wayfinder/vibe-coding-framework/`](../.scratch/wayfinder/vibe-coding-framework/)
