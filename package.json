@@ -35,7 +35,10 @@
     "security-scan": "node template/scripts/security_scan.js",
     "wiki-ingest": "node template/scripts/wiki_ingest.js",
     "wiki-query": "node template/scripts/wiki_query.js",
-    "wiki-lint": "node template/scripts/wiki_lint.js"
+    "wiki-lint": "node template/scripts/wiki_lint.js",
+    "wiki-ingest:stdin": "node template/scripts/wiki_ingest.js --stdin",
+    "wiki-query:json": "node template/scripts/wiki_query.js --json",
+    "wiki-lint:fix": "node template/scripts/wiki_lint.js --fix"
   },
   "dependencies": { "js-yaml": "^4.3.1" }
 }

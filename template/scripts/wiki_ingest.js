@@ -4,8 +4,7 @@
      node scripts/wiki_ingest.js <path-or-glob ...>
      cat raw/doc.md | node scripts/wiki_ingest.js --stdin "doc title"
    Writes source/entity/concept pages to wiki/, updates index.md,
-   appends a log entry to wiki/log.md. Prints nothing on success;
-   exit 0 = good, 1 = failure. */
+   appends a log entry to wiki/log.md. Exit 0 = success, 1 = failure. */
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -22,8 +21,7 @@ function die(msg) { console.error('Error: ' + msg); process.exit(1); }
 function today() { return new Date().toISOString().slice(0, 10); }
 
 function readInput(args) {
-  const isStdin = args.length === 2 && args[0] === '--stdin';
-  if (isStdin) {
+  if (args.length === 2 && args[0] === '--stdin') {
     const buffer = fs.readFileSync(0, 'utf8');
     if (!buffer.trim()) die('stdin is empty — pass --stdin with content');
     return [{ content: buffer, name: args[1] || 'unnamed-source', sourceFile: null }];
@@ -49,13 +47,19 @@ function slugify(name) {
 
 function stripFrontmatter(body) {
   const m = body.match(/^---\n([\s\S]*?)\n---\n?/);
-  if (!m) return { fm: {}, body };
-  try { return { fm: yaml.load(m[1]) || {}, body: body.slice(m[0].length) }; }
-  catch (e) { return { fm: {}, body }; }
+  if (!m) return { fm: {}, body: body };
+  try { return { fm: yaml.load(m[1]) || {}, body: body.slice(m[0].length) }; } catch { return { fm: {}, body: body }; }
+}
+
+function parsePage(filepath) {
+  const content = fs.readFileSync(filepath, 'utf8');
+  const m = content.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (!m) return { slug: path.basename(filepath, '.md'), fm: null, body: content };
+  try { return { slug: path.basename(filepath, '.md'), fm: yaml.load(m[1]) || {}, body: content.slice(m[0].length) }; } catch { return { slug: path.basename(filepath, '.md'), fm: null, body: content }; }
 }
 
 function pageType(fm) {
-  const tags = Array.isArray(fm.tags) ? fm.tags : [];
+  const tags = Array.isArray(fm.tags) ? fm.tags.flat() : (typeof fm.tags === 'string' ? [fm.tags] : []);
   if (tags.includes('source')) return 'source';
   if (tags.includes('concept')) return 'concept';
   if (tags.includes('entity')) return 'entity';
@@ -87,34 +91,42 @@ function appendLog(action, title, extra) {
 }
 
 function updateIndex(written) {
-  let idx = '';
-  try { idx = fs.readFileSync(INDEX_PATH, 'utf8'); } catch (e) {
-    idx = '---\ntags: [wiki-index]\n---\n# Wiki index\n\n';
-  }
+  // Rebuild index from all existing wiki pages to avoid duplication
   const sections = { source: '## Sources', entity: '## Entities', concept: '## Concepts' };
-  for (const w of written) {
-    if (!idx.includes(sections[w.type])) {
-      idx += '\n' + sections[w.type] + '\n\n';
+  const allPages = [];
+  if (fs.existsSync(WIKI_DIR)) {
+    const existing = fs.readdirSync(WIKI_DIR).filter(function(f) {
+      return f.endsWith('.md') && f !== 'index.md' && f !== 'log.md';
+    });
+    for (const f of existing) {
+      const pg = parsePage(path.join(WIKI_DIR, f));
+      allPages.push(pg);
     }
   }
-  for (const w of written) {
-    const section = sections[w.type] || '## Others';
-    const line = '- [[' + w.slug + ']] — ' + (Array.isArray(w.fm.summary) ? (w.fm.summary[0] || '(no summary)') : (w.fm.summary || '(no summary)'));
-    const parts = idx.split('\n');
-    let inserted = false;
-    const newLines = [];
-    for (let i = 0; i < parts.length; i++) {
-      newLines.push(parts[i]);
-      if (!inserted && parts[i].trim() === section) {
-        newLines.push(line);
-        inserted = true;
+  let idx = '---\ntags: [wiki-index]\n---\n# Wiki index\nCatalog of every page in this wiki. The maintainer updates this on every\ningest. Categories grow as content arrives.\n\n';
+  const byType = { source: [], entity: [], concept: [], other: [] };
+  for (const pg of allPages) {
+    const tags = pg.fm && Array.isArray(pg.fm.tags) ? pg.fm.tags.flat() : [];
+    let type = 'other';
+    if (tags.includes('source')) type = 'source';
+    else if (tags.includes('concept')) type = 'concept';
+    else if (tags.includes('entity')) type = 'entity';
+    byType[type].push(pg);
+  }
+  for (const t of ['entity', 'concept', 'source', 'other']) {
+    const arr = byType[t];
+    if (t === 'other' && !arr.length) continue;
+    const header = sections[t] || '## Others';
+    idx += header + '\n\n';
+    for (const pg of arr) {
+      let summary = '(no summary)';
+      if (pg.fm) {
+        const s = pg.fm.summary;
+        summary = Array.isArray(s) ? (s[0] || '(no summary)') : (s || '(no summary)');
       }
+      idx += '- [[' + pg.slug + ']] — ' + summary + '\n';
     }
-    if (!inserted) {
-      idx += '\n' + section + '\n' + line + '\n';
-    } else {
-      idx = newLines.join('\n');
-    }
+    idx += '\n';
   }
   fs.writeFileSync(INDEX_PATH, idx);
 }
@@ -128,7 +140,8 @@ function main() {
   for (const { content, name, sourceFile } of inputs) {
     const { fm: originalFm, body } = stripFrontmatter(content);
     const slug = slugify(name);
-    const summary = (originalFm.summary || (Array.isArray(originalFm.summary) ? originalFm.summary[0] : '') || body.split(/\n/).filter(function(l) { return l.trim() && !l.startsWith('#') && !l.startsWith('[['); })[0] || name).slice(0, 80);
+    const bodyLines = body.split('\n').filter(function(l) { return l.trim() && !l.startsWith('#') && !l.startsWith('[['); });
+    const summary = (originalFm.summary || (Array.isArray(originalFm.summary) ? originalFm.summary[0] : '') || bodyLines[0] || name).slice(0, 80);
     const type = pageType({ ...originalFm, summary: summary });
     const fm = {
       tags: ['wiki-page', 'source', ...(originalFm.tags || [])],

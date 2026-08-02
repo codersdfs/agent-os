@@ -16,7 +16,10 @@
     "verify": "node scripts/verify.js",
     "wiki-ingest": "node scripts/wiki_ingest.js",
     "wiki-query": "node scripts/wiki_query.js",
-    "wiki-lint": "node scripts/wiki_lint.js"
+    "wiki-lint": "node scripts/wiki_lint.js",
+    "wiki-ingest:stdin": "node scripts/wiki_ingest.js --stdin",
+    "wiki-query:json": "node scripts/wiki_query.js --json",
+    "wiki-lint:fix": "node scripts/wiki_lint.js --fix"
   },
   "dependencies": {
     "js-yaml": "^4.3.1"
