@@ -1,6 +1,6 @@
 {
   "name": "@franklinww/create-agent-os",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "BETA. Scaffold an agent OS workspace: skill-powered AI workflows + an LLM Wiki template in one repo. Includes vibe coding framework and meta-skill management. Pure Node — no python, no pip.",
   "bin": {
     "meta-skill-framework": "bin/meta-skill-framework.js",
