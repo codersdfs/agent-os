@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 ASSEMBLED_SYSTEM_PROMPT.txt
 .DS_Store
+
+# AI-Coding Framework artifacts
+.vibe_audit/
+.vibe_cert

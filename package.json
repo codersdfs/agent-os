@@ -23,7 +23,8 @@
   "homepage": "https://github.com/codersdfs/skill#readme",
   "bin": {
     "meta-skill-framework": "bin/meta-skill-framework.js",
-    "planning": "bin/planning.js"
+    "planning": "bin/planning.js",
+    "vibe": "bin/vibe.js"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -44,6 +45,11 @@
     "match": "node bin/meta-skill-framework.js match",
     "auto": "node bin/meta-skill-framework.js auto",
     "load": "node bin/meta-skill-framework.js load",
-    "prepublishOnly": "node bin/meta-skill-framework.js build"
+    "prepublishOnly": "node bin/meta-skill-framework.js build",
+    "vibe": "node bin/vibe.js",
+    "vibe:classify": "node bin/vibe.js classify",
+    "vibe:check": "node bin/vibe.js check",
+    "vibe:audit": "node bin/vibe.js audit",
+    "vibe:signoff": "node bin/vibe.js signoff"
   }
 }
