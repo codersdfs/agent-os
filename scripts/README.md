@@ -9,15 +9,15 @@ CLI tool for enforcing responsible AI-assisted development practices. Implements
 pip install -r requirements.txt 2>/dev/null || true
 
 # Make executable
-chmod +x scripts/vibe_framework.py
+chmod +x scripts/vibe.js
 ```
 
 ## Commands
 
 ### Classify code risk
 ```bash
-python scripts/vibe_framework.py classify path/to/file.py
-python scripts/vibe_framework.py classify path/to/directory/
+node bin/vibe.js classify path/to/file.py
+node bin/vibe.js classify path/to/directory/
 ```
 
 **Output:**
@@ -34,8 +34,8 @@ Risk levels:
 
 ### Run safety checks
 ```bash
-python scripts/vibe_framework.py check path/to/file.py
-python scripts/vibe_framework.py check path/to/file.py --risk-level high
+node bin/vibe.js check path/to/file.py
+node bin/vibe.js check path/to/file.py --risk-level high
 ```
 
 **Checks performed (by risk level):**
@@ -55,9 +55,9 @@ python scripts/vibe_framework.py check path/to/file.py --risk-level high
 
 ### Log audit trail
 ```bash
-python scripts/vibe_framework.py audit "Create login endpoint" auth.py
+node bin/vibe.js audit "Create login endpoint" auth.py
 # Or pipe from stdin:
-echo "def login(): pass" | python scripts/vibe_framework.py audit "Auth helper"
+echo "def login(): pass" | node bin/vibe.js audit "Auth helper"
 ```
 
 **Output:**
@@ -71,15 +71,15 @@ Audit entries saved to `.vibe_audit/` (gitignored).
 
 ### View audit log
 ```bash
-python scripts/vibe_framework.py view
-python scripts/vibe_framework.py view --limit 5
+node bin/vibe.js view
+node bin/vibe.js view --limit 5
 ```
 
 ---
 
 ### Interactive certification
 ```bash
-python scripts/vibe_framework.py signoff
+node bin/vibe.js signoff
 ```
 
 Prompts through checklist:
@@ -102,8 +102,8 @@ Add to `.husky/pre-commit` or equivalent:
 CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.py$')
 
 for FILE in $CHANGED_FILES; do
-    RISK_LEVEL=$(python scripts/vibe_framework.py classify "$FILE" 2>/dev/null | grep -oE '(HIGH|MEDIUM|LOW)' | tr '[:lower:]' '[:upper:]')
-    [ -n "$RISK_LEVEL" ] && python scripts/vibe_framework.py check "$FILE" --risk-level "$RISK_LEVEL" || exit 1
+    RISK_LEVEL=$(node bin/vibe.js classify "$FILE" 2>/dev/null | grep -oE '(HIGH|MEDIUM|LOW)' | tr '[:lower:]' '[:upper:]')
+    [ -n "$RISK_LEVEL" ] && node bin/vibe.js check "$FILE" --risk-level "$RISK_LEVEL" || exit 1
 done
 ```
 
@@ -111,7 +111,7 @@ Or with npm scripts:
 ```json
 {
   "scripts": {
-    "precommit": "python scripts/vibe_framework.py check"
+    "precommit": "node bin/vibe.js check"
   },
   "husky": {
     "hooks": {
@@ -137,7 +137,7 @@ npm run vibe:view -- --limit 5
 
 ## Configuration
 
-No config file needed. To customize patterns, edit `scripts/vibe_framework.py`:
+No config file needed. To customize patterns, edit `scripts/vibe.js`:
 
 ```python
 HIGH_RISK_PATTERNS = [
