@@ -54,6 +54,9 @@ function ask(q) {
   fs.mkdirSync(dest, { recursive: true });
   fs.cpSync(path.join(__dirname, 'template'), dest, { recursive: true });
 
+  // raw/ is where sources land — create it explicitly
+  fs.mkdirSync(path.join(dest, 'raw'), { recursive: true });
+
   const today = new Date().toISOString().slice(0, 10);
   for (const f of ['package.json', 'AGENTS.md', 'wiki/index.md', 'wiki/log.md']) {
     const p = path.join(dest, f);

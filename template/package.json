@@ -13,7 +13,10 @@
     "skill-assemble": "node scripts/assemble_prompt.js",
     "selfcheck": "node scripts/selfcheck.js",
     "security-scan": "node scripts/security_scan.js",
-    "verify": "node scripts/verify.js"
+    "verify": "node scripts/verify.js",
+    "wiki-ingest": "node scripts/wiki_ingest.js",
+    "wiki-query": "node scripts/wiki_query.js",
+    "wiki-lint": "node scripts/wiki_lint.js"
   },
   "dependencies": {
     "js-yaml": "^4.3.1"
