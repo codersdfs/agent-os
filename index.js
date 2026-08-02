@@ -21,7 +21,7 @@ function usage() {
   console.log(`create-agent-os — scaffold an agent OS workspace
 (template: skill-powered AI workflows + LLM Wiki, in one repo; pure Node, no python)
 
-Usage: npm create agent-os@latest [dir] [options]
+Usage: npm create @franklinww/agent-os [dir] [options]
 
 Options:
   -y, --yes        skip prompts (use defaults)
@@ -30,8 +30,8 @@ Options:
   -h, --help       show this help
 
 Examples:
-  npm create agent-os@latest my-brain
-  npm create agent-os@latest .`);
+  npm create @franklinww/agent-os my-brain
+  npm create @franklinww/agent-os .`);
 }
 
 function ask(q) {
